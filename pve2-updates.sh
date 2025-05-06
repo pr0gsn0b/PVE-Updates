@@ -3,15 +3,6 @@
 pve2hosts=( "homepage" "whoogle" "firefox" "pihole" "ddns" "nextcloud" "kuma" "guac" "tunnel-2" "nginx" "vault" "tdarr-1" "beeguard" )
 
 
-
-: <<'CMNT'
-for host in ${pve2hosts[@]}; do
-    ssh-copy-id root@$host.local
-done
-CMNT
-
-
-
 for host in ${pve2hosts[@]}; do
     ssh -tt root@$host.local <<'CMD'
     if grep -iq debian /etc/os-release > /dev/null 2>&1; then
