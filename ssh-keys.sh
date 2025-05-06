@@ -4,13 +4,15 @@ pve1hosts=( "tunnel1" "avery-kuma" "cockpit" "sabnzbd" "qbit" "tdarr" "overseerr
 pve2hosts=( "homepage" "whoogle" "firefox" "pihole" "ddns" "nextcloud" "kuma" "guac" "tunnel-2" "nginx" "vault" "tdarr-1" "beeguard" )
 pve3hosts=( "tunnel-3" "tdarr-2" )
 
-copy () {
-  hosts=$1
-  for host in ${hosts[@]}; do
-    ssh-copy-id root@$host
-  done
-}
 
-copy $pve1hosts
-copy $pve2hosts
-copy $pve3hosts
+for host in ${pve1hosts[@]}; do
+  ssh-copy-id root@$host.local
+done
+
+for host in ${pve1hosts[@]}; do
+  ssh-copy-id root@$host.local
+done
+
+for host in ${pve1hosts[@]}; do
+  ssh-copy-id root@$host.local
+done
