@@ -5,7 +5,7 @@ pve2hosts=( "homepage" "whoogle" "firefox" "pihole" "ddns" "nextcloud" "kuma" "g
 pve3hosts=( "tunnel-3" "tdarr-2" )
 
 copy () {
-  for host in "${1[@]}"; do
+  for host in ${1[@]}; do
     ssh-copy-id root@$host
   done
 }
