@@ -23,4 +23,5 @@ for host in ${pve2hosts[@]}; do
 CMD
 done
 
+
 ssh root@pve2.local 'apt update && apt dist-upgrade -y'
