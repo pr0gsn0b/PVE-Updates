@@ -9,10 +9,10 @@ for host in ${pve1hosts[@]}; do
   ssh-copy-id root@$host.local
 done
 
-for host in ${pve1hosts[@]}; do
+for host in ${pve2hosts[@]}; do
   ssh-copy-id root@$host.local
 done
 
-for host in ${pve1hosts[@]}; do
+for host in ${pve3hosts[@]}; do
   ssh-copy-id root@$host.local
 done
