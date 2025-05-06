@@ -3,15 +3,6 @@
 pve1hosts=( "tunnel1" "avery-kuma" "cockpit" "sabnzbd" "qbit" "tdarr" "overseerr" "plex" "servarr" "minecraft" )
 
 
-
-: <<'CMNT'
-for host in ${pve1hosts[@]}; do
-    ssh-copy-id root@$host.local
-done
-CMNT
-
-
-
 for host in ${pve1hosts[@]}; do
     ssh -tt root@$host.local <<'CMD'
     if grep -iq debian /etc/os-release > /dev/null 2>&1; then
