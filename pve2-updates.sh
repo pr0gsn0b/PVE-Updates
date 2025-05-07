@@ -19,8 +19,6 @@ for host in ${pve2hosts[@]}; do
             docker image prune -f
         done
     fi
-
-    if [[  ]]
     exit
 CMD
 done
