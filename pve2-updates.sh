@@ -5,7 +5,7 @@ pve2hosts=( "homepage" "whoogle" "firefox" "pihole" "ddns" "nextcloud" "kuma" "g
 
 for host in ${pve2hosts[@]}; do
     ssh -tt root@$host.local <<'CMD'
-    if grep -iq debian /etc/os-release > /dev/null 2>&1; then
+    if [[ grep -iq debian /etc/os-release > /dev/null 2>&1 || grep -iq ubuntu /etc/os-release > /dev/null 2>&1 ]]; then
         apt update && apt upgrade -y
     elif grep -iq alpine /etc/os-release > /dev/null 2>&1; then
         apk update && apk upgrade
@@ -19,6 +19,8 @@ for host in ${pve2hosts[@]}; do
             docker image prune -f
         done
     fi
+
+    if [[  ]]
     exit
 CMD
 done
