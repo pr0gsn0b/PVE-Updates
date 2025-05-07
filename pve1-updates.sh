@@ -16,9 +16,9 @@ for host in ${pve1hosts[@]}; do
             cd "$ct"
             docker compose pull
             docker compose up -d
+            docker image prune -f
         done
     fi
-    docker image prune -f
     exit
 CMD
 done
