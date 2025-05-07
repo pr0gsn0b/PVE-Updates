@@ -7,7 +7,7 @@ pve3hosts=( "tunnel-3" "tdarr-2" )
 
 read -p "Which host would you like to update? [pve1/pve2/pve3]" choice
 
-if [[ $choice != "pve1" || $choice != "pve2" || $choice != "pve3" ]]; then
+if [[ $choice != "pve1" && $choice != "pve2" && $choice != "pve3" ]]; then
     echo "Invalid input."
     exit
 else
