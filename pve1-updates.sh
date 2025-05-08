@@ -7,12 +7,14 @@ pve3hosts=( "tunnel-3" "tdarr-2" )
 
 read -p "Which host would you like to update? [pve1/pve2/pve3]" choice
 
-if [[ $choice != "pve1" && $choice != "pve2" && $choice != "pve3" ]]; then
-    echo "Invalid input."
-    exit
-else
-    choice=$choice"hosts"
-    exit
+if [[ $choice == "pve1" ]]; then
+    ssh root@pve1.local 'bash <(wget -qO- )'
+elif [[ $choice == "pve2" ]]; then
+    ssh root@pve2.local 'bash <(wget -qO- )'
+elif [[ $choice == "pve3" ]]; then
+    ssh root@pve3.local 'bash <(wget -qO- )'
+else 
+    echo "Invalid Input."
 fi
 
 
