@@ -7,6 +7,7 @@ for host in ${pve1hosts[@]}; do
     ssh -tt root@$host.local <<'CMD'
     if grep -iq debian /etc/os-release > /dev/null 2>&1 || grep -iq ubuntu /etc/os-release > /dev/null 2>&1; then
         apt update && apt upgrade -y
+        apt autoremove -y
     elif grep -iq alpine /etc/os-release > /dev/null 2>&1; then
         apk update && apk upgrade
     fi
