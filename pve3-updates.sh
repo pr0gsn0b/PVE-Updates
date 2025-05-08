@@ -25,5 +25,5 @@ CMD
 done
 
 
-apt update && apt dist-upgrade -y
+apt-get update && apt-get dist-upgrade -y
 apt autoremove -y
