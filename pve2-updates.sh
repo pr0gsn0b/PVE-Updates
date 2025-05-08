@@ -23,7 +23,7 @@ for host in ${pve2hosts[@]}; do
     fi
 
 
-    if [[ $(hostname) == "guac" ]]; then
+    if [[ $(hostname) == "guacamole" ]]; then
         systemctl restart docker
     fi
     exit
