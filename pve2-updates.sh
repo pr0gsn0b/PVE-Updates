@@ -25,4 +25,4 @@ CMD
 done
 
 
-ssh root@pve2.local 'apt update && apt dist-upgrade -y'
+apt update && apt dist-upgrade -y
