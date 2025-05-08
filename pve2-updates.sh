@@ -27,6 +27,7 @@ for host in ${pve2hosts[@]}; do
         service docker restart
     elif [[ $(hostname) == "pihole" ]]; then
         pihole -up
+    fi
     exit
 CMD
 done
