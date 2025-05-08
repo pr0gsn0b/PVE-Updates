@@ -24,7 +24,7 @@ for host in ${pve2hosts[@]}; do
 
 
     if [[ $(hostname) == "guacamole" ]]; then
-        systemctl restart docker
+        service docker restart
     fi
     exit
 CMD
