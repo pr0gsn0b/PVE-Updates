@@ -11,6 +11,7 @@ for host in ${pve2hosts[@]}; do
     elif grep -iq alpine /etc/os-release > /dev/null 2>&1; then
         apk update && apk upgrade
     fi
+    
 
     if command -v docker > /dev/null 2>&1; then
         for ct in /home/*/; do
@@ -19,6 +20,11 @@ for host in ${pve2hosts[@]}; do
             docker compose up -d
             docker image prune -f
         done
+    fi
+
+
+    if [[ $(hostname) == "guac" ]]; then
+        systemctl restart docker
     fi
     exit
 CMD
