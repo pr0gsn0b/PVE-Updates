@@ -5,7 +5,7 @@ pve1hosts=( "tunnel1" "avery-kuma" "cockpit" "sabnzbd" "qbit" "tdarr" "overseerr
 
 for host in ${pve1hosts[@]}; do
     ssh -tt root@$host.local <<'CMD'
-    if [[ grep -iq debian /etc/os-release > /dev/null 2>&1 || grep -iq debian /etc/os-release > /dev/null 2>&1 ]]; then
+    if [[ grep -iq debian /etc/os-release > /dev/null 2>&1 || grep -iq ubuntu /etc/os-release > /dev/null 2>&1 ]]; then
         apt update && apt upgrade -y
     elif grep -iq alpine /etc/os-release > /dev/null 2>&1; then
         apk update && apk upgrade
