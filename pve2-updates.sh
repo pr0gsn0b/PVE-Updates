@@ -23,9 +23,10 @@ for host in ${pve2hosts[@]}; do
     fi
 
 
-    if [[ $(hostname) == "guacamole" ]]; then
+    if [[ $(hostname) == "xguacamole" ]]; then
         service docker restart
-    fi
+    elif [[ $(hostname) == "pihole" ]]; then
+        pihole -up
     exit
 CMD
 done
