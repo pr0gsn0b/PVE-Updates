@@ -18,12 +18,12 @@ for host in ${pve2hosts[@]}; do
             cd "$ct"
             docker compose pull
             docker compose up -d
-            docker image prune -f
         done
+        docker image prune -f
     fi
 
 
-    if [[ $(hostname) == "xguacamole" ]]; then
+    if [[ $(hostname) == "guacamole" ]]; then
         service docker restart
     elif [[ $(hostname) == "pihole" ]]; then
         pihole -up
