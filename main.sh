@@ -5,7 +5,7 @@ pve2hosts=( "homepage" "whoogle" "firefox" "pihole2" "ddns" "nextcloud" "kuma" "
 pve3hosts=( "tunnel-3" "tdarr-2" )
 
 
-read -p "Which host would you like to update? [pve1/pve2/pve3]" choice
+read -p "Which host would you like to update? [pve1/pve2/pve3] " choice
 
 if [[ $choice == "pve1" ]]; then
     ssh root@pve1.local 'bash <(wget -qO- https://github.com/pr0gsn0b/PVE-Updates/raw/refs/heads/main/pve1-updates.sh)'
