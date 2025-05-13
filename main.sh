@@ -58,6 +58,7 @@ update_pve_node () {
                 zfs list && zpool status
                 ;;
         esac
+        exit
 EOT
 }
 
