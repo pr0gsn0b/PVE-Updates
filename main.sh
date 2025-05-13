@@ -44,16 +44,32 @@ func () {
 EOT
     done
 
-    ssh -tt root@$choice.local <<EOT
-        echo -e "\e[1;93m>>> Updating system for $choice <<<\e[0m"
-        apt update && apt-get dist-upgrade -y
-        case $choice in
-            "pve1")
-                zfs list && zpool status
-                ;;
-        esac
-        exit
+    case $choice in
+        !"all")
+            ssh -tt root@$choice.local <<EOT
+                echo -e "\e[1;93m>>> Updating system for $choice <<<\e[0m"
+                apt update && apt-get dist-upgrade -y
+                case $choice in
+                    "pve1")
+                        zfs list && zpool status
+                        ;;
+                esac
+                exit
 EOT
+                ;;
+        "all")
+            sysup () {
+                ssh root@$1.local <<EOT
+                    echo -e "\e[1;93m>>> Updating system for $choice <<<\e[0m"
+                    apt update && apt-get dist-upgrade -y
+                    if [[ \$(hostname) == "queen-bee" ]]; then
+                        zfs list && zpool status
+                    fi    
+                    exit
+            }
+            sysup "pve1"
+            sysup "pve2"
+            sysup "pve3"
 }
 
 
