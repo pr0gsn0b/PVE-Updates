@@ -6,9 +6,9 @@ pve2hosts=( "homepage" "whoogle" "firefox" "pihole2" "ddns" "nextcloud" "kuma" "
 pve3hosts=( "tunnel-3" "tdarr-2" )
 
 func () {
-    echo -e "\e[1;93m#################\e[0m"
+    echo -e "\e[1;93m#######################\e[0m"
     echo -e "\e[1;93m# Updating $1 group #\e[0m"
-    echo -e "\e[1;93m#################\e[0m"
+    echo -e "\e[1;93m#######################\e[0m"
 
     shift
     for host in "$@"; do
