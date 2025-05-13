@@ -62,7 +62,7 @@ update_pve_node () {
 EOT
 }
 
-read -p "Which host would you like to update? [pve1/pve2/pve3/all] " choice
+read -p "\e[1;96mWhich host would you like to update? [pve1/pve2/pve3/all] \e[0m" choice
 
 case $choice in
     "pve1")
