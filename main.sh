@@ -58,19 +58,9 @@ EOT
 EOT
                 ;;
         "all")
-            sysup () {
-                ssh root@$1.local <<EOT
-                    echo -e "\e[1;93m>>> Updating system for $choice <<<\e[0m"
-                    apt update && apt-get dist-upgrade -y
-                    if [[ \$(hostname) == "queen-bee" ]]; then
-                        zfs list && zpool status
-                    fi    
-                    exit
-EOT
-            }
-            sysup "pve1"
-            sysup "pve2"
-            sysup "pve3"
+            ssh -tt root@pve3.local 'apt update && apt-get dist-upgrade -y'
+            ssh -tt root@pve2.local 'apt update && apt-get dist-upgrade -y'
+            ssh -tt root@pve1.local 'apt update && apt-get dist-upgrade -y && zfs list && zpool status'
 }
 
 
