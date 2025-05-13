@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 pve3hosts=( "tunnel-3" "tdarr-2" )
 
