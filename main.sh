@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 read -p "Which host would you like to update? [pve1/pve2/pve3] " choice
 
