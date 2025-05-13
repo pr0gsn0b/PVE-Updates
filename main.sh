@@ -7,81 +7,84 @@ pve3hosts=( "tunnel-3" "tdarr-2" )
 
 func () {
     echo -e "\e[1;93m#################\e[0m"
-    echo -e "\e[1;93m# Updating $choice #\e[0m"
+    echo -e "\e[1;93m# Updating $1 group #\e[0m"
     echo -e "\e[1;93m#################\e[0m"
 
+    shift
     for host in "$@"; do
-        ssh -tt root@$host.local <<EOT
-            if grep -iq debian /etc/os-release > /dev/null 2>&1 || grep -iq ubuntu /etc/os-release > /dev/null 2>&1; then
-                echo -e "\e[1;92m>>> Updating system for \$(hostname) <<<\e[0m"
+        echo -e "\e[1;94m>>> Connecting to $host <<<\e[0m"
+        ssh -tt root@"$host".local <<'EOT'
+            if grep -iq debian /etc/os-release || grep -iq ubuntu /etc/os-release; then
+                echo -e "\e[1;92m>>> Updating system for $(hostname) <<<\e[0m"
                 apt update && apt upgrade -y
                 apt autoremove -y
-            elif grep -iq alpine /etc/os-release > /dev/null 2>&1; then
-                echo -e "\e[1;92m>>> Updating system for \$(hostname) <<<\e[0m"
+            elif grep -iq alpine /etc/os-release; then
+                echo -e "\e[1;92m>>> Updating system for $(hostname) <<<\e[0m"
                 apk update && apk upgrade
             fi
 
             if command -v docker > /dev/null 2>&1; then
-                echo -e "\e[1;94m>>> Updating docker images for \$(hostname) <<<\e[0m"
+                echo -e "\e[1;94m>>> Updating docker images for $(hostname) <<<\e[0m"
                 for ct in /home/*/; do
-                    cd "\$ct"
+                    cd "$ct"
                     docker compose pull
                     docker compose up -d
                 done
                 docker image prune -f
             fi
 
-            case \$(hostname) in
-                "guacamole")
+            case $(hostname) in
+                guacamole)
                     service docker restart
                     ;;
-                "pihole")
+                pihole)
                     echo -e "\e[1;91m>>> Updating pihole <<<\e[0m"
                     pihole -up
                     ;;
             esac
-            exit
 EOT
     done
-
-    case $choice in
-        !"all")
-            ssh -tt root@$choice.local <<EOT
-                echo -e "\e[1;93m>>> Updating system for $choice <<<\e[0m"
-                apt update && apt-get dist-upgrade -y
-                case $choice in
-                    "pve1")
-                        zfs list && zpool status
-                        ;;
-                esac
-                exit
-EOT
-                ;;
-        "all")
-            ssh -tt root@pve3.local 'apt update && apt-get dist-upgrade -y'
-            ssh -tt root@pve2.local 'apt update && apt-get dist-upgrade -y'
-            ssh -tt root@pve1.local 'apt update && apt-get dist-upgrade -y && zfs list && zpool status'
 }
 
+update_pve_node () {
+    local node=$1
+    echo -e "\e[1;96m>>> Updating Proxmox node: $node <<<\e[0m"
+    ssh -tt root@"$node".local <<EOT
+        echo -e "\e[1;93m>>> Updating system for $node <<<\e[0m"
+        apt update && apt-get dist-upgrade -y
+        case "$node" in
+            pve1)
+                zfs list && zpool status
+                ;;
+        esac
+EOT
+}
 
 read -p "Which host would you like to update? [pve1/pve2/pve3/all] " choice
 
 case $choice in
     "pve1")
-        func "${pve1hosts[@]}"
+        func "pve1" "${pve1hosts[@]}"
+        update_pve_node "pve1"
         ;;
     "pve2")
-        func "${pve2hosts[@]}"
+        func "pve2" "${pve2hosts[@]}"
+        update_pve_node "pve2"
         ;;
     "pve3")
-        func "${pve3hosts[@]}"
+        func "pve3" "${pve3hosts[@]}"
+        update_pve_node "pve3"
         ;;
     "all")
-        func "${pve1hosts[@]}"
-        func "${pve2hosts[@]}"
-        func "${pve3hosts[@]}"
+        func "pve1" "${pve1hosts[@]}"
+        func "pve2" "${pve2hosts[@]}"
+        func "pve3" "${pve3hosts[@]}"
+        update_pve_node "pve3"
+        update_pve_node "pve2"
+        update_pve_node "pve1"
         ;;
     *)
         echo "Invalid input."
-        exit
+        exit 1
+        ;;
 esac
