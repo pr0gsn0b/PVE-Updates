@@ -66,6 +66,7 @@ EOT
                         zfs list && zpool status
                     fi    
                     exit
+EOT
             }
             sysup "pve1"
             sysup "pve2"
