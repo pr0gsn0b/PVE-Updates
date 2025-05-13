@@ -31,7 +31,7 @@ func () {
                 docker image prune -f
             fi
 
-            case \$hostname in
+            case \$(hostname) in
                 "guacamole")
                     service docker restart
                     ;;
