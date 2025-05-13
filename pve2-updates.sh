@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 pve2hosts=( "homepage" "whoogle" "firefox" "pihole2" "ddns" "nextcloud" "kuma" "guac" "tunnel-2" "nginx" "vault" "tdarr-1" "beeguard" )
 
