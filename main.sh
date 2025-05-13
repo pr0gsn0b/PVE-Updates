@@ -42,6 +42,7 @@ func () {
                     pihole -up
                     ;;
             esac
+            exit
 EOT
     done
 }
