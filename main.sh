@@ -9,22 +9,27 @@ func () {
     echo -e "\e[1;93m#######################\e[0m"
     echo -e "\e[1;93m# Updating $1 group #\e[0m"
     echo -e "\e[1;93m#######################\e[0m"
+    sleep 3
 
     shift
     for host in "$@"; do
         echo -e "\e[1;94m>>> Connecting to $host <<<\e[0m"
+        sleep 3
         ssh -tt root@"$host".local <<'EOT'
             if grep -iq debian /etc/os-release || grep -iq ubuntu /etc/os-release; then
                 echo -e "\e[1;92m>>> Updating system for $(hostname) <<<\e[0m"
+                sleep 3
                 apt update && apt upgrade -y
                 apt autoremove -y
             elif grep -iq alpine /etc/os-release; then
                 echo -e "\e[1;92m>>> Updating system for $(hostname) <<<\e[0m"
+                sleep 3
                 apk update && apk upgrade
             fi
 
             if command -v docker > /dev/null 2>&1; then
                 echo -e "\e[1;94m>>> Updating docker images for $(hostname) <<<\e[0m"
+                sleep 3
                 for ct in /home/*/; do
                     cd "$ct"
                     docker compose pull
@@ -39,6 +44,7 @@ func () {
                     ;;
                 pihole)
                     echo -e "\e[1;91m>>> Updating pihole <<<\e[0m"
+                    sleep 3
                     pihole -up
                     ;;
             esac
@@ -50,6 +56,7 @@ EOT
 update_pve_node () {
     local node=$1
     echo -e "\e[1;96m>>> Updating Proxmox node: $node <<<\e[0m"
+    sleep 3
     ssh -tt root@"$node".local <<EOT
         echo -e "\e[1;93m>>> Updating system for $node <<<\e[0m"
         apt update && apt-get dist-upgrade -y
@@ -62,7 +69,8 @@ update_pve_node () {
 EOT
 }
 
-read -ep "\e[1;96mWhich host would you like to update? [pve1/pve2/pve3/all] \e[0m" choice
+printf "\e[1;96mWhich host would you like to update? [pve1/pve2/pve3/all] \e[0m"
+read choice
 
 case $choice in
     "pve1")
