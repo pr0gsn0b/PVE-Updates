@@ -60,6 +60,7 @@ update_pve_node () {
     ssh -tt root@"$node".local <<EOT
         echo -e "\e[1;93m>>> Updating system for $node <<<\e[0m"
         apt update && apt-get dist-upgrade -y
+        pveam update
         case "$node" in
             pve1)
                 zfs list && zpool status
